@@ -1,6 +1,6 @@
 ---
 name: go-refactor
-description: Use when refactoring Go code, optimizing performance, or enforcing clean architecture boundaries in a Go/Fiber backend
+description: Use when refactoring Go code, cleaning up legacy codebases, optimizing performance, or enforcing clean architecture boundaries in a Go/Fiber backend
 ---
 
 # Go Refactoring & Performance
@@ -128,7 +128,86 @@ config.MaxConnLifetime = 30 * time.Minute
 config.MaxConnIdleTime = 5 * time.Minute
 ```
 
+## Legacy Code Rescue
+
+When working with legacy Go code that has no tests, bad structure, or mixed concerns:
+
+### Step 1: Characterize Before Touching
+
+**Never change legacy code without characterization tests.** Write tests that capture current behavior — even if the behavior is wrong. You need a safety net before refactoring.
+
+```go
+// Characterization test: document what the code ACTUALLY does
+func TestLegacy_CreateUser_CurrentBehavior(t *testing.T) {
+    // This test captures existing behavior, not desired behavior
+    // If this test breaks during refactoring, you changed behavior (not just structure)
+    result, err := legacyCreateUser(input)
+    assert.NoError(t, err)
+    assert.Equal(t, expectedOutput, result) // whatever it currently returns
+}
+```
+
+### Step 2: Identify the Worst Offenders
+
+Prioritize by risk, not by ugliness:
+1. **Code handling user input without validation** — security risk, fix first
+2. **Code with no error handling** — silent failures, data corruption risk
+3. **God files (500+ lines)** — impossible to test, split by responsibility
+4. **Circular dependencies** — extract interfaces to break cycles
+5. **Dead code** — remove to reduce cognitive load
+
+### Step 3: Incremental Strangler Fig
+
+Don't rewrite — wrap and replace incrementally:
+
+```go
+// 1. Extract interface from legacy code
+type UserService interface {
+    Create(ctx context.Context, input CreateInput) (*User, error)
+}
+
+// 2. Legacy implementation stays as-is (for now)
+type legacyUserService struct { db *sql.DB }
+
+// 3. New implementation follows clean architecture
+type cleanUserService struct { repo domain.UserRepository }
+
+// 4. Feature flag or gradual rollover
+func NewUserService(useLegacy bool) UserService {
+    if useLegacy { return &legacyUserService{} }
+    return &cleanUserService{}
+}
+```
+
+### Step 4: Add Missing Error Handling
+
+```go
+// Before: legacy swallows errors
+result, _ := db.Query(query)
+
+// After: handle every error
+result, err := db.Query(query)
+if err != nil {
+    return fmt.Errorf("query users: %w", err)
+}
+```
+
+### Step 5: Remove Dead Code
+
+```bash
+# Find unused functions
+grep -rn "^func " --include="*.go" | while read line; do
+  func_name=$(echo "$line" | grep -oP 'func \K\w+')
+  count=$(grep -rn "$func_name" --include="*.go" | wc -l)
+  [ "$count" -le 1 ] && echo "UNUSED: $line"
+done
+```
+
+**Delete it.** Don't comment it out. Git has history.
+
 ## Chains
 
 - **REQUIRED:** Use `superpowers:systematic-debugging` for performance investigation
-- Write characterization tests before any refactoring
+- **REQUIRED:** Write characterization tests before any refactoring — no exceptions
+- **REQUIRED:** Update CLAUDE.md with discovered gotchas and conventions (`claude-md`)
+- **Legacy codebases:** Run `fullstack-healthcheck` first to prioritize what to fix

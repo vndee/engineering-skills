@@ -116,6 +116,8 @@ Based on the clarified intent, determine which skills to invoke and in what orde
 | "Add background jobs" / "Add webhooks" | `event-driven` |
 | "Optimize this" / "Make it faster" / "Add caching" | `code-quality` → `go-refactor`/`py-refactor`/`react-refactor` |
 | "Refactor this" | `go-refactor`/`py-refactor`/`react-refactor` |
+| "Clean up this codebase" / "Fix legacy code" / "Technical debt" | `fullstack-healthcheck` → `go-refactor`/`py-refactor`/`react-refactor` |
+| "This code is a mess" / "Inherited bad code" | `fullstack-healthcheck` (triage) → prioritized refactor |
 | "Set up CI/CD" / "Add GitHub Actions" | `ci-pipeline` |
 | "Set up Docker" / "Containerize" | `docker-build` |
 | "Add integration tests" | `go-integration-test`/`py-integration-test` |

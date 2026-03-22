@@ -1,6 +1,6 @@
 ---
 name: react-refactor
-description: Use when refactoring React components, optimizing performance, improving component architecture, or reducing bundle size
+description: Use when refactoring React components, cleaning up legacy frontends, optimizing performance, improving component architecture, or reducing bundle size
 ---
 
 # React Refactoring & Performance
@@ -119,7 +119,105 @@ const { Chart } = await import('chart.js')
 | Global state for server data | React Query |
 | URL state in useState | Use URL params (useSearchParams) |
 
+## Legacy Frontend Rescue
+
+When inheriting a messy React codebase:
+
+### Step 1: Characterize Before Touching
+
+```tsx
+// Characterization test: capture what renders and what happens on interaction
+test('UserList renders current behavior', async () => {
+  render(<UserList />)
+  // Document what actually appears — even if it's wrong
+  expect(screen.getByRole('table')).toBeInTheDocument()
+  expect(await screen.findAllByRole('row')).toHaveLength(11) // header + 10 rows
+})
+```
+
+### Step 2: Identify the Worst Offenders
+
+1. **No error boundaries** — one component crash takes down the whole app
+2. **Fetch in useEffect with no cleanup** — race conditions, memory leaks
+3. **Giant monolith components (500+ lines)** — impossible to test, split first
+4. **Class components with lifecycle spaghetti** — migrate to hooks incrementally
+5. **Inline styles everywhere** — extract to consistent styling approach
+6. **No loading/error states** — blank screens on failure
+7. **Direct DOM manipulation** — `document.getElementById` in React code
+
+### Step 3: Triage and Prioritize
+
+```bash
+# Find god components
+find src -name "*.tsx" -exec wc -l {} \; | sort -rn | head -20
+
+# Find components with no tests
+for f in $(find src -name "*.tsx" ! -name "*.test.*" ! -name "*.spec.*"); do
+  test_file="${f%.tsx}.test.tsx"
+  [ ! -f "$test_file" ] && echo "NO TEST: $f"
+done
+
+# Find unused exports
+bunx ts-prune
+
+# Find direct DOM access
+grep -rn "document\.\(getElementById\|querySelector\|createElement\)" src/
+```
+
+### Step 4: Incremental Migration
+
+**Don't rewrite — wrap and replace:**
+
+```tsx
+// 1. Wrap legacy component to add error boundary + loading state
+function SafeUserList() {
+  return (
+    <ErrorBoundary fallback={<ErrorMessage />}>
+      <Suspense fallback={<Spinner />}>
+        <LegacyUserList />
+      </Suspense>
+    </ErrorBoundary>
+  )
+}
+
+// 2. Extract data fetching from component to hook
+function useUsers() {
+  return useQuery({ queryKey: ['users'], queryFn: fetchUsers })
+}
+
+// 3. Replace legacy component piece by piece
+function UserList() {
+  const { data: users, isLoading, error } = useUsers()
+  if (isLoading) return <Spinner />
+  if (error) return <ErrorMessage error={error} />
+  if (!users?.length) return <EmptyState />
+  return <UserTable users={users} />
+}
+```
+
+### Step 5: Add Missing States
+
+Every data-fetching component needs all three:
+```tsx
+// Loading → Error → Empty → Data
+if (isLoading) return <Skeleton />
+if (error) return <ErrorAlert message={error.message} />
+if (!data?.length) return <EmptyState message="No users found" />
+return <UserTable users={data} />
+```
+
+### Step 6: Remove Dead Code
+
+```bash
+bunx ts-prune          # unused exports
+bunx knip              # unused files, dependencies, exports
+```
+
+**Delete it.** Git has history.
+
 ## Chains
 
-- **REQUIRED:** Write characterization tests before refactoring
+- **REQUIRED:** Write characterization tests before refactoring — no exceptions
+- **REQUIRED:** Update CLAUDE.md with discovered gotchas and conventions (`claude-md`)
 - Use `superpowers:systematic-debugging` for performance investigation
+- **Legacy codebases:** Run `fullstack-healthcheck` first to prioritize what to fix
