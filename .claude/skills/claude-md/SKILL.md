@@ -156,6 +156,32 @@ This skill is invoked as a **final step** by other skills. The calling skill doe
 - `adr` — update Architecture if decision changes architecture
 - `onboarding` — full CLAUDE.md generation (uses this skill's structure)
 
+## Staleness Detection
+
+Periodically audit CLAUDE.md against the actual codebase to catch drift:
+
+```bash
+# Check if documented commands still exist
+# For each command in CLAUDE.md's ## Commands section, verify:
+grep -q "target_name" Makefile  # Does the make target exist?
+grep -q "script_name" package.json  # Does the npm/bun script exist?
+
+# Check if documented env vars are still used
+# For each var in ## Environment Variables:
+grep -rn "ENV_VAR_NAME" --include="*.go" --include="*.py" --include="*.tsx"
+
+# Check if documented directories still exist
+# For each path in ## Key Directories:
+ls -d path/to/directory 2>/dev/null || echo "STALE: directory no longer exists"
+```
+
+**When to audit:**
+- During `fullstack-healthcheck` runs
+- When onboarding to a codebase (`onboarding` skill)
+- When a command fails with "not found" — likely stale CLAUDE.md
+
+**When staleness is found:** Fix it immediately. A stale CLAUDE.md is worse than no CLAUDE.md because it actively misleads.
+
 ## Self-Check
 
 After updating CLAUDE.md, verify:
@@ -164,6 +190,7 @@ After updating CLAUDE.md, verify:
 - [ ] No missing env vars that new code requires
 - [ ] All new directories documented
 - [ ] Conventions section matches actual code patterns
+- [ ] Documented commands actually work (staleness check)
 - [ ] File is under 100 lines (trim if needed — CLAUDE.md is loaded every session)
 
 ## Chains

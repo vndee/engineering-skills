@@ -159,6 +159,19 @@ During execution, periodically check in with the user:
 
 **Use AskUserQuestion for every decision point, not plaintext questions.**
 
+### Completion Status Protocol
+
+Every skill execution must end with an explicit status:
+
+| Status | Meaning | What to Do |
+|--------|---------|------------|
+| **DONE** | All work completed, all checks pass | Proceed to next skill or report to user |
+| **DONE_WITH_CONCERNS** | Work completed but with caveats | List concerns, ask user if acceptable |
+| **BLOCKED** | Cannot proceed without user input or external change | Explain blocker, ask for resolution |
+| **NEEDS_CONTEXT** | Missing information to continue | Ask clarifying questions via AskUserQuestion |
+
+**Always state the status explicitly.** Never silently finish — the user should always know where things stand.
+
 ## Phase 4: Learn from Mistakes
 
 **After every correction from the user, update CLAUDE.md immediately.**

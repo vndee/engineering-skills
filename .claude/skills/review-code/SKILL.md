@@ -132,26 +132,48 @@ Wait for all four agents to complete. Aggregate findings by severity:
 | **MEDIUM** | Missing swaggo annotations, type safety gaps, code duplication, missing error context | Fix now, acceptable to defer with TODO |
 | **LOW** | Missing example tags, minor style issues, potential future optimization | Note and skip if time-constrained |
 
+### Fix-First Classification
+
+Every finding gets classified before action:
+
+| Classification | Definition | Action |
+|---------------|-----------|--------|
+| **AUTO-FIX** | Mechanical issue with one correct solution (missing LIMIT, N+1 query, missing parameterized query) | Fix directly, no discussion |
+| **ASK** | Judgment call with trade-offs (architecture refactor, API design choice, scope decision) | Present options to user via AskUserQuestion |
+| **SKIP** | False positive or irrelevant to this codebase | Note and move on |
+
+**Default to AUTO-FIX.** Only use ASK when there are genuinely multiple valid approaches. Never ASK about non-negotiables (security, N+1, tests) — those are always AUTO-FIX.
+
 ### Fix Process
 
-1. Fix all CRITICAL and HIGH issues directly in code
+1. Fix all CRITICAL and HIGH issues directly in code (AUTO-FIX)
 2. Fix MEDIUM issues — skip only if clearly a false positive
 3. Note LOW issues in summary — do not spend time on these
 4. Do NOT argue with findings or add defensive commentary — fix or skip
 
-### Output Format
+### Evidence-First Reporting
+
+**Every finding must include evidence.** No vague claims.
 
 ```
 ## Code Review Results
 
-### Fixed (N issues)
-- [CRITICAL] Fixed N+1 query in UserRepository.List — batch query with IN clause
-- [HIGH] Added LIMIT to events query in ActivityService
-- ...
+### Status: DONE / DONE_WITH_CONCERNS
 
-### Skipped (N issues)
+### Fixed (N issues) — AUTO-FIX
+- [CRITICAL] Fixed N+1 query in `UserRepository.List` (user_repo.go:45)
+  Evidence: query inside for loop, replaced with batch IN clause
+- [HIGH] Added LIMIT to events query in `ActivityService` (activity.go:78)
+  Evidence: SELECT without LIMIT on table with 100k+ rows
+- [CRITICAL] Fixed SQL injection in `SearchHandler` (search_handler.go:23)
+  Evidence: string concatenation `"WHERE name = '" + input + "'"`, replaced with parameterized query
+
+### Asked (N issues) — ASK
+- [MEDIUM] `UserService` has 8 methods — split into smaller services?
+  Presented options to user: keep as-is vs split by domain
+
+### Skipped (N issues) — SKIP
 - [LOW] Missing example tag on InternalDTO — not exposed in Swagger
-- ...
 
 ### Clean
 - No architecture violations found

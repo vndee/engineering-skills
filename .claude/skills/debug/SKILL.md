@@ -325,17 +325,42 @@ Once you know which layer is broken:
 
 ## Phase 4: Fix with Evidence
 
+**Evidence-first rule: Never claim a root cause without proof. Never claim a fix works without verification output.**
+
 **Before fixing, you must have:**
 - [ ] The exact command/action that reproduces the bug
-- [ ] The exact error message or wrong behavior observed
-- [ ] The specific line/query/component where it breaks
+- [ ] The exact error message or wrong behavior observed (paste the actual output)
+- [ ] The specific file:line where it breaks
 - [ ] Understanding of WHY it breaks (not just WHERE)
 
 **Then follow `superpowers:systematic-debugging` Phase 4:**
 1. Write a failing test that captures the bug
 2. Fix the root cause (not the symptom)
-3. Verify the test passes
-4. Check no other tests broke
+3. Verify the test passes — **show the test output**
+4. Check no other tests broke — **show the full test run output**
+
+**After fixing, report with evidence:**
+```
+## Debug Report
+
+### Status: DONE / DONE_WITH_CONCERNS
+
+### Root Cause
+[Specific explanation with file:line reference]
+
+### Evidence
+- Reproduction: `curl -X POST .../users` → 500 Internal Server Error
+- Error log: `ERROR user_repo.go:45 — pq: duplicate key value violates unique constraint`
+- Root cause: Missing ON CONFLICT in upsert query (user_repo.go:45)
+
+### Fix
+- Added `ON CONFLICT (email) DO UPDATE` to upsert query
+- Test: `TestUpsertUser_DuplicateEmail` — PASS
+- Full suite: 142/142 PASS
+
+### Gotcha (for CLAUDE.md)
+- Users table has unique constraint on email — always use upsert, not insert
+```
 
 ## Quick Reference: Debug Commands by Symptom
 
@@ -355,5 +380,7 @@ Once you know which layer is broken:
 ## Chains
 
 - **REQUIRED:** Follow `superpowers:systematic-debugging` methodology — this skill provides the tools, that skill provides the process
+- **REQUIRED:** Report with evidence — every claim must have proof (log output, test output, curl response)
+- **REQUIRED:** Update CLAUDE.md with discovered gotchas (`claude-md`) — prevent the same bug from recurring
 - **Performance issues:** Use `go-refactor` / `py-refactor` after finding root cause
 - **Frontend issues:** Use `browse` skill for visual debugging with Playwright

@@ -189,24 +189,48 @@ done
 grep -rn "^[[:space:]]*//" --include="*.go" | grep -v "godoc\|nolint\|TODO\|FIXME" | head -20
 ```
 
+## Health Score
+
+Calculate a weighted health score (0-100) for the project:
+
+| Dimension | Weight | Scoring |
+|-----------|--------|---------|
+| Build | 15% | PASS=100, FAIL=0 |
+| Tests | 20% | Pass rate × coverage % (e.g., 95% pass × 80% coverage = 76) |
+| Type Safety | 10% | (1 - errors/total_lines × 1000) × 100, capped at 0 |
+| Lint | 5% | (1 - warnings/total_lines × 100) × 100, capped at 0 |
+| Security | 20% | PASS=100, critical vuln=0, high vuln=50, medium vuln=75 |
+| Architecture | 15% | (1 - violations/total_files × 10) × 100, capped at 0 |
+| Code Quality | 10% | 100 - (god_files × 10) - (untested_files × 5), capped at 0 |
+| Tech Debt | 5% | 100 - (TODOs/10) - (dead_code × 5), capped at 0 |
+
+**Score interpretation:**
+- **90-100:** Ship-ready. Minor improvements optional.
+- **70-89:** Healthy. Address HIGH items before next feature.
+- **50-69:** Needs attention. Dedicate time to cleanup before adding features.
+- **Below 50:** Legacy rescue mode. Run refactor skills before any new work.
+
 ## Health Report Format
 
 ```
 ## Project Health Report
 
+### Health Score: XX/100 [GRADE]
+(Previous: YY/100 — ↑improved / ↓declined / →stable)
+
+### Status: DONE / DONE_WITH_CONCERNS
+
 ### Summary
-| Check | Status | Notes |
-|-------|--------|-------|
-| Build | PASS/FAIL | |
-| Tests | PASS/FAIL | X/Y passing, Z% coverage |
-| Types | PASS/FAIL | N errors (Python) |
-| Lint | PASS/FAIL | N warnings |
-| Migrations | PASS/FAIL | |
-| Docker | PASS/FAIL | |
-| Security | PASS/FAIL | N vulnerabilities |
-| Architecture | PASS/FAIL | N violations |
-| Code Quality | PASS/WARN/FAIL | N god files, M untested files |
-| Tech Debt | LOW/MEDIUM/HIGH | N TODOs, M dead code items |
+| Check | Status | Score | Notes |
+|-------|--------|-------|-------|
+| Build | PASS/FAIL | /15 | |
+| Tests | PASS/FAIL | /20 | X/Y passing, Z% coverage |
+| Types | PASS/FAIL | /10 | N errors (Python) |
+| Lint | PASS/FAIL | /5 | N warnings |
+| Security | PASS/FAIL | /20 | N vulnerabilities |
+| Architecture | PASS/FAIL | /15 | N violations |
+| Code Quality | PASS/WARN/FAIL | /10 | N god files, M untested files |
+| Tech Debt | LOW/MEDIUM/HIGH | /5 | N TODOs, M dead code items |
 
 ### Technical Debt Summary
 - Test coverage: X% (target: 80%+)
@@ -227,6 +251,19 @@ grep -rn "^[[:space:]]*//" --include="*.go" | grep -v "godoc\|nolint\|TODO\|FIXM
 7. [LOW] Clean up TODOs and commented-out code
 8. [LOW] Reduce cyclomatic complexity in Z
 ```
+
+## Trend Tracking
+
+After generating a health report, save the score to CLAUDE.md so future runs can show trends:
+
+```markdown
+## Health History
+- 2026-03-22: 72/100 (3 HIGH items, 5 MEDIUM)
+- 2026-03-15: 65/100 (5 HIGH items, 8 MEDIUM)
+- 2026-03-08: 58/100 (initial assessment — legacy rescue mode)
+```
+
+This lets the team see if the codebase is getting healthier or degrading over time.
 
 ## Legacy Codebase Triage
 
