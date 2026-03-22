@@ -1,6 +1,6 @@
 # Claude Code Skills for Full-Stack Engineering
 
-33 Claude Code skills that cover the entire engineering and product lifecycle. From product spec to production deploy, from scaffolding to incident response.
+35 Claude Code skills that cover the entire engineering and product lifecycle — from product spec to production deploy, from scaffolding to incident response, led by an AI engineering lead that orchestrates everything.
 
 Built for engineers who care about performance, clean architecture, and shipping quality code fast.
 
@@ -16,6 +16,13 @@ This suite covers:
 - **Shared** — Clean architecture, TDD-first, Docker, GitHub Actions, observability, security
 
 ## Skills Overview
+
+### Orchestration (Always Active)
+
+| Skill | Description |
+|-------|-------------|
+| `eng-lead` | AI engineering lead that orchestrates all skills — understands intent, clarifies requirements interactively, routes to the right skills |
+| `interactive-clarify` | Enforces interactive Q&A (AskUserQuestion tool) over plaintext questions — users pick from options instead of reading walls of text |
 
 ### Product & Planning
 
@@ -93,6 +100,9 @@ This suite covers:
 ## How Skills Connect
 
 ```
+Every conversation:
+  eng-lead (always active) → interactive-clarify → route to skills
+
 Idea → Product:
   product-spec → system-design → data-model → adr
 
