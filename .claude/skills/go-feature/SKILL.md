@@ -164,5 +164,6 @@ users.Get("/:id", userHandler.GetByID)
 
 - **REQUIRED:** Invoke `superpowers:test-driven-development` at each layer
 - **REQUIRED:** Follow `code-quality` standards — no N+1 queries, batch operations, pre-allocated slices, indexed columns, O(n) not O(n^2)
+- **REQUIRED:** Update CLAUDE.md if new conventions, commands, or patterns are introduced (`claude-md`)
 - **Schema changes:** Invoke `db-migrate` before implementing repository
 - **API conventions:** Reference `api-design` for request/response patterns

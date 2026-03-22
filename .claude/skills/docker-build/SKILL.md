@@ -184,3 +184,7 @@ healthcheck:
   timeout: 5s
   retries: 3
 ```
+
+## Chains
+
+- **REQUIRED:** Update CLAUDE.md with Docker commands (`claude-md`)

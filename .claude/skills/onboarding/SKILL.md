@@ -214,6 +214,7 @@ When onboarding to an existing codebase, analyze and generate docs:
 
 ## Chains
 
+- **REQUIRED:** Follow `claude-md` structure for CLAUDE.md generation
 - **Generate after:** `go-scaffold` / `py-scaffold` / `react-scaffold`
 - **Update after:** Major architectural changes, `adr` decisions
 - **Use with:** `fullstack-healthcheck` for current project state

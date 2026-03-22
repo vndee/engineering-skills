@@ -249,6 +249,7 @@ SENTRY_DSN=
 
 ## Chains
 
+- **REQUIRED:** Update CLAUDE.md with deployment commands and env vars (`claude-md`)
 - **Before:** `docker-build` for Dockerfiles, `ci-pipeline` for CI
 - **After deploy:** `observability` for monitoring
 - **If broken:** `incident-response` for handling failures

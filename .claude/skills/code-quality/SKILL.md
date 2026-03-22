@@ -1,6 +1,6 @@
 ---
 name: code-quality
-description: Use when writing any production code in Go, Python, or React — enforces performance-first patterns, prevents N+1 queries, and demands algorithmic efficiency
+description: Use when writing any production code in Go, Python, or React — enforces performance-first patterns, prevents N+1 queries, demands algorithmic efficiency, and ensures security safety at every layer
 ---
 
 # Code Quality & Performance Standards
@@ -9,9 +9,22 @@ description: Use when writing any production code in Go, Python, or React — en
 
 Every line of code must be written with performance and scalability in mind. No naive implementations. No "fix it later." Write it right the first time.
 
-**Core principle:** Think like a competitive programmer — analyze time/space complexity before writing. O(n) where O(n^2) exists is a bug, not a TODO.
+**Core principle:** Think like a competitive programmer — analyze time/space complexity before writing. O(n) where O(n^2) exists is a bug, not a TODO. Security is not a feature — it's a baseline.
 
 ## The Non-Negotiables
+
+### 0. Security Safety — The Baseline
+
+Before performance even matters, the code must be safe:
+
+- **Parameterized queries ALWAYS** — never concatenate user input into SQL. Use `$1, $2` (pgx) or `:param` (SQLAlchemy). No exceptions.
+- **Input validation at every boundary** — `ValidateBody[T]` (Go), Pydantic models (Python). Never trust user input.
+- **Auth middleware on protected routes** — every endpoint that accesses user data must verify authentication.
+- **No hardcoded secrets** — API keys, passwords, JWT secrets come from environment variables.
+- **No sensitive data in logs** — never log passwords, tokens, or PII.
+- **CORS, security headers, rate limiting** — applied at middleware level from day one.
+
+If security is missing, the code doesn't ship. Period. See `security` skill for full patterns.
 
 These patterns are **never acceptable** in production code:
 

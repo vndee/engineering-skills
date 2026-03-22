@@ -104,7 +104,9 @@ This is the highest priority review. Check every change against these rules:
 - [ ] **Panic in library code** (Go) — use error returns, never panic
 - [ ] **Bare except** (Python) — `except Exception` or `except:` without specific error types
 
-### Agent 4: Security & Safety Review
+### Agent 4: Security & Safety Review (NON-NEGOTIABLE)
+
+**Security is a non-negotiable. Any security finding is automatically CRITICAL.**
 
 - [ ] **SQL injection** — string concatenation in queries instead of parameterized args
 - [ ] **Missing input validation** — user input used without validation (should go through ValidateBody/Query/Params or Pydantic)
@@ -114,6 +116,8 @@ This is the highest priority review. Check every change against these rules:
 - [ ] **Hardcoded secrets** — API keys, passwords, connection strings in code instead of env vars
 - [ ] **Path traversal** — user-controlled file paths without sanitization
 - [ ] **Mass assignment** — binding all request fields to model without allowlist
+- [ ] **Missing rate limiting** — public endpoints without rate limiting middleware
+- [ ] **Insecure defaults** — debug mode, verbose errors, or stack traces exposed in production config
 
 ## Phase 3: Aggregate & Fix
 

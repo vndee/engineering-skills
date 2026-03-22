@@ -221,6 +221,7 @@ Dependencies point inward. Domain has zero external imports.
 
 ## Chains
 
+- **REQUIRED:** Update CLAUDE.md with stack, commands, directories, and conventions (`claude-md`)
 - Pairs with `react-scaffold` for full-stack setup
 - Use `docker-build` for production Dockerfile
 - Use `ci-pipeline` for GitHub Actions setup

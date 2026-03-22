@@ -138,4 +138,5 @@ return <UserList users={data} />
 
 - **REQUIRED:** Invoke `superpowers:test-driven-development`
 - **REQUIRED:** Follow `code-quality` standards — virtualize long lists, debounce inputs, paginate API calls, code-split routes
+- **REQUIRED:** Update CLAUDE.md if new conventions, commands, or patterns are introduced (`claude-md`)
 - Can develop in parallel with `go-feature` or `py-feature`

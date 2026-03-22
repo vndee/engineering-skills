@@ -103,3 +103,4 @@ Look for:
 ## Chains
 
 - **REQUIRED:** Invoke `superpowers:finishing-a-development-branch` when done
+- **REQUIRED:** Update CLAUDE.md if major dependencies changed (`claude-md`)

@@ -322,3 +322,7 @@ Allow-Methods: GET, POST, PUT, PATCH, DELETE, OPTIONS
 Allow-Headers: Content-Type, Authorization
 Allow-Credentials: true
 ```
+
+## Chains
+
+- **REQUIRED:** Update CLAUDE.md with API conventions (`claude-md`)

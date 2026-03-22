@@ -151,3 +151,7 @@ alembic upgrade head && alembic downgrade -1 && alembic upgrade head
 - Using `nullable=False` without `server_default` on existing tables
 - Forgetting async engine config in `env.py`
 - Enum types not dropped in downgrade
+
+## Chains
+
+- **REQUIRED:** Update CLAUDE.md if new migration commands are added (`claude-md`)

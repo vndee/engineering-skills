@@ -127,5 +127,6 @@ it('renders app', () => {
 
 ## Chains
 
+- **REQUIRED:** Update CLAUDE.md with stack, commands, directories, and conventions (`claude-md`)
 - Pairs with `go-scaffold` or `py-scaffold` for full-stack
 - Use `react-feature` for adding features

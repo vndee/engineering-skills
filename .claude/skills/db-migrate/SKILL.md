@@ -120,3 +120,7 @@ make migrate-up && make migrate-down && make migrate-up
 - `TIMESTAMP` without timezone — always use `TIMESTAMPTZ`
 - Non-concurrent index creation on large tables — causes locks
 - Adding NOT NULL without DEFAULT — fails on existing rows
+
+## Chains
+
+- **REQUIRED:** Update CLAUDE.md if new migration commands are added (`claude-md`)

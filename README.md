@@ -1,6 +1,6 @@
 # Claude Code Skills for Full-Stack Engineering
 
-35 Claude Code skills that cover the entire engineering and product lifecycle — from product spec to production deploy, from scaffolding to incident response, led by an AI engineering lead that orchestrates everything.
+36 Claude Code skills that cover the entire engineering and product lifecycle — from product spec to production deploy, from scaffolding to incident response, led by an AI engineering lead that orchestrates everything.
 
 Built for engineers who care about performance, clean architecture, and shipping quality code fast.
 
@@ -20,7 +20,7 @@ Idea → Spec → Architecture → Schema → Code → Test → Review → Deplo
 
 Every stage has a dedicated skill. Every skill encodes the knowledge of a senior engineer. The result: one person with Claude Code operates at the output of a full engineering team.
 
-### Three Non-Negotiables
+### Four Non-Negotiables
 
 These are enforced by skills at every stage — not optional, not "nice to have":
 
@@ -28,7 +28,9 @@ These are enforced by skills at every stage — not optional, not "nice to have"
 
 2. **Clean architecture** — Domain isolation, dependency rules, layers that don't leak. Code structured so it can evolve without rewriting. No spaghetti, no "we'll refactor later."
 
-3. **Test-driven always** — No production code without a failing test first. TDD is the process, not a suggestion. Tests prove the code works; code without tests is a liability.
+3. **Security by default** — Parameterized queries always. Input validation at every boundary. Auth middleware on every protected route. No hardcoded secrets, no SQL injection, no XSS. Security is not a feature to add later — it's baked into every skill from scaffold to deploy.
+
+4. **Test-driven always** — No production code without a failing test first. TDD is the process, not a suggestion. Tests prove the code works; code without tests is a liability.
 
 ### Human + Agent = Pair Partners
 
@@ -36,7 +38,9 @@ The human brings **product vision, context, and decisions**. The agent brings **
 
 The agent **always checks in** — at phase transitions, at design decisions, when something unexpected surfaces. It uses interactive questions (selectable options, not walls of text) so the human stays in the loop without doing busywork.
 
-The agent **never asks about engineering best practices** — parameterized queries, indexes, error handling, test structure — those are encoded in skills and applied automatically. It **does ask about product decisions** — scope, features, trade-offs, priorities — because those belong to the human.
+The agent **never asks about engineering best practices** — parameterized queries, indexes, error handling, test structure, security hardening — those are encoded in skills and applied automatically. It **does ask about product decisions** — scope, features, trade-offs, priorities — because those belong to the human.
+
+The agent **never makes the same mistake twice.** Every correction, every gotcha, every project-specific pitfall gets recorded in CLAUDE.md. Future sessions read it automatically. The agent learns from its mistakes — permanently.
 
 ### Who This Is For
 
@@ -52,7 +56,9 @@ The agent **never asks about engineering best practices** — parameterized quer
 | Re-explain conventions every session | Encoded permanently, applied automatically |
 | N+1 queries, no indexes, O(n²) loops | Performance standards enforced at every layer |
 | Everything in one file, no architecture | Clean architecture from line one |
+| Security bolted on as afterthought | Security baked in from first scaffold |
 | Agent guesses what you want | Agent asks targeted questions with selectable options |
+| Same mistake every new session | Mistakes recorded in CLAUDE.md, never repeated |
 | Junior-level output that needs rewriting | Senior-level output that ships |
 
 ## What This Is
@@ -145,6 +151,7 @@ The agent **never asks about engineering best practices** — parameterized quer
 | `dep-update` | Safe dependency updates with security audits and type-check verification |
 | `fullstack-healthcheck` | Auto-detect stack, run all checks, produce health report with action items |
 | `onboarding` | Generate CLAUDE.md, ARCHITECTURE.md, CONTRIBUTING.md, CODEOWNERS from codebase |
+| `claude-md` | Proactively maintain CLAUDE.md — every skill that changes structure, commands, or conventions updates it automatically |
 
 ## How Skills Connect
 
@@ -168,9 +175,10 @@ Feature Development:
     → event-driven (async work)
     → analytics (instrumentation)
 
-  All features enforce:
+  All skills that change the project enforce:
     → code-quality (performance standards)
     → superpowers:test-driven-development (TDD)
+    → claude-md (keep CLAUDE.md current)
 
 Pre-commit:
   → review-code (4-agent review + auto-fix)

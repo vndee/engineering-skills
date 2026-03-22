@@ -103,5 +103,6 @@ docs/
 
 ## Chains
 
+- **REQUIRED:** Update CLAUDE.md if decision changes architecture or conventions (`claude-md`)
 - **After:** `system-design` decisions, `data-model` schema decisions
 - **Reference:** During `go-refactor` / `py-refactor` to understand original intent

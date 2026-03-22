@@ -196,3 +196,7 @@ Add to test job:
 - Running lint and test sequentially — parallelize with separate jobs
 - Not caching dependencies — slow builds
 - Skipping type-check in Python CI — catches real bugs
+
+## Chains
+
+- **REQUIRED:** Update CLAUDE.md with CI commands (`claude-md`)

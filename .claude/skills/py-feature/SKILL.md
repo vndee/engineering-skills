@@ -140,5 +140,6 @@ async def test_create_user(client: AsyncClient) -> None:
 
 - **REQUIRED:** Invoke `superpowers:test-driven-development` at each layer
 - **REQUIRED:** Follow `code-quality` standards — no N+1 queries (use `selectinload`/`joinedload`), batch operations, set-based lookups, asyncio.gather for independent I/O
+- **REQUIRED:** Update CLAUDE.md if new conventions, commands, or patterns are introduced (`claude-md`)
 - **Schema changes:** Invoke `py-migrate` before implementing repository
 - **API conventions:** Reference `api-design` for request/response patterns

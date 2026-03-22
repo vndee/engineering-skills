@@ -269,6 +269,7 @@ app.Use(func(c fiber.Ctx) error {
 
 ## Chains
 
+- **REQUIRED:** Update CLAUDE.md with auth conventions and new environment variables (`claude-md`)
 - **Build into:** `go-scaffold` / `py-scaffold` (auth middleware from day one)
 - **Checked by:** `review-code` Agent 4 (security review)
 - **Reference:** `api-design` for auth annotations in swaggo

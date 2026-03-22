@@ -199,6 +199,7 @@ All code fully typed. mypy strict. No untyped defs.
 
 ## Chains
 
+- **REQUIRED:** Update CLAUDE.md with stack, commands, directories, and conventions (`claude-md`)
 - Pairs with `react-scaffold` for full-stack
 - Use `docker-build` for production Dockerfile
 - Use `ci-pipeline` for GitHub Actions

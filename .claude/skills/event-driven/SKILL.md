@@ -215,5 +215,6 @@ type UserCreatedEvent struct {
 
 ## Chains
 
+- **REQUIRED:** Update CLAUDE.md with async patterns and env vars (`claude-md`)
 - **Architecture:** Decided in `system-design`
 - **Implementation:** Use `go-feature` or `py-feature` for the handlers

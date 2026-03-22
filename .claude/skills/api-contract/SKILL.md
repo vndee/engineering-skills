@@ -258,6 +258,7 @@ export const userHandlers = [
 
 ## Chains
 
+- **REQUIRED:** Update CLAUDE.md with API contract conventions (`claude-md`)
 - **Contract defined in:** `system-design` or `api-design`
 - **Backend implementation:** `go-feature` / `py-feature` with swaggo annotations
 - **Frontend implementation:** `react-feature` with typed API client

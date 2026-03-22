@@ -116,6 +116,7 @@ Based on the clarified intent, determine which skills to invoke and in what orde
 | "Add background jobs" | `event-driven` |
 | "Refactor this" | `go-refactor`/`py-refactor`/`react-refactor` |
 | "Document this" | `onboarding` → `adr` |
+| "Update CLAUDE.md" | `claude-md` |
 | "I don't know what I need" | Ask questions to discover → `product-spec` |
 
 ### Multi-Skill Orchestration
@@ -152,6 +153,26 @@ During execution, periodically check in with the user:
 
 **Use AskUserQuestion for every decision point, not plaintext questions.**
 
+## Phase 4: Learn from Mistakes
+
+**After every correction from the user, update CLAUDE.md immediately.**
+
+If the user says "that's wrong" or corrects your approach:
+1. Fix the immediate issue
+2. Add the gotcha to CLAUDE.md's `## Gotchas` section so it never happens again
+3. Update any related conventions or patterns in CLAUDE.md
+
+**The agent must never make the same mistake twice.** CLAUDE.md is the project's permanent memory. Every session reads it. Every correction persists.
+
+## Four Non-Negotiables
+
+These are applied automatically — never ask the user about them:
+
+1. **Performance** — O(n) algorithms, batch operations, no N+1 queries (`code-quality`)
+2. **Clean architecture** — dependency rules, layer isolation (`review-code`)
+3. **Security** — parameterized queries, input validation, auth on every route, no hardcoded secrets (`security`)
+4. **TDD** — failing test before implementation, always (`superpowers:test-driven-development`)
+
 ## Anti-Patterns
 
 | Bad | Good |
@@ -173,3 +194,6 @@ If you catch yourself doing any of these, STOP:
 - Not providing option defaults (mark one as Recommended)
 - Ignoring the user's answers and doing something different
 - Invoking a scaffold/feature skill without knowing the stack
+- Making the same mistake that's already documented in CLAUDE.md's Gotchas
+- Writing code without security considerations (auth, validation, parameterized queries)
+- Not updating CLAUDE.md after the user corrects you

@@ -266,5 +266,6 @@ Every service must expose a health endpoint that checks all dependencies:
 
 ## Chains
 
+- **REQUIRED:** Update CLAUDE.md with logging conventions and monitoring env vars (`claude-md`)
 - **Setup during:** `go-scaffold` or `py-scaffold`
 - **Debug with:** `debug` skill uses these signals for investigation
