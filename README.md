@@ -221,12 +221,38 @@ Open Claude Code and check that skills appear:
 > /fullstack-healthcheck
 ```
 
-### Update
+### Update Skills
+
+Skills are just Markdown files — Claude Code reads them fresh every session. No restart or settings changes needed.
 
 ```bash
 cd engineering-skills
 git pull
-# Symlinks point to the repo — no re-linking needed
+# Symlinks point to the repo — existing skills update automatically
+```
+
+If a new skill was added in the update, re-run the symlink loop to pick it up:
+
+```bash
+for skill in .claude/skills/*/; do
+  name=$(basename "$skill")
+  ln -sf "$(pwd)/$skill" "$HOME/.claude/skills/$name"
+done
+```
+
+### Update Claude Code
+
+Keep Claude Code itself up to date to get the latest features and skill support:
+
+```bash
+# Check current version
+claude --version
+
+# Update to latest
+npm update -g @anthropic-ai/claude-code
+
+# Or if installed via Homebrew
+brew upgrade claude-code
 ```
 
 ## Customization
