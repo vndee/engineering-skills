@@ -104,17 +104,21 @@ Based on the clarified intent, determine which skills to invoke and in what orde
 | "Fix a bug" | `debug` → `superpowers:systematic-debugging` |
 | "Something is down" | `incident-response` → `debug` |
 | "Review my code" | `review-code` |
-| "Set up a new project" | `go-scaffold`/`py-scaffold` + `react-scaffold` → `onboarding` |
+| "Set up a new project" | `go-scaffold`/`py-scaffold` + `react-scaffold` → `docker-build` → `ci-pipeline` → `onboarding` |
 | "Deploy to production" | `deploy` → `security` checklist |
 | "Update dependencies" | `dep-update` |
 | "Check project health" | `fullstack-healthcheck` |
-| "Design the API" | `api-design` → `api-contract` |
+| "Design the API" / "Generate Swagger docs" | `api-design` → `api-contract` |
 | "Design the database" | `data-model` → `db-migrate`/`py-migrate` |
 | "Add logging/monitoring" | `observability` |
-| "Add auth/security" | `security` |
+| "Add auth/security" / "Add rate limiting" / "Add CORS" | `security` |
 | "Add analytics" | `analytics` |
-| "Add background jobs" | `event-driven` |
+| "Add background jobs" / "Add webhooks" | `event-driven` |
+| "Optimize this" / "Make it faster" / "Add caching" | `code-quality` → `go-refactor`/`py-refactor`/`react-refactor` |
 | "Refactor this" | `go-refactor`/`py-refactor`/`react-refactor` |
+| "Set up CI/CD" / "Add GitHub Actions" | `ci-pipeline` |
+| "Set up Docker" / "Containerize" | `docker-build` |
+| "Add integration tests" | `go-integration-test`/`py-integration-test` |
 | "Document this" | `onboarding` → `adr` |
 | "Update CLAUDE.md" | `claude-md` |
 | "I don't know what I need" | Ask questions to discover → `product-spec` |

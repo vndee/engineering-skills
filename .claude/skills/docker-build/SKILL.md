@@ -188,3 +188,5 @@ healthcheck:
 ## Chains
 
 - **REQUIRED:** Update CLAUDE.md with Docker commands (`claude-md`)
+- **Invoked by:** `go-scaffold` / `py-scaffold` / `react-scaffold` (during project setup)
+- **Feeds into:** `ci-pipeline` (build stage) → `deploy` (production deployment)

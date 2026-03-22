@@ -157,3 +157,10 @@ Wait for all four agents to complete. Aggregate findings by severity:
 - No architecture violations found
 - Security review passed
 ```
+
+## Chains
+
+- **Invoked by:** `eng-lead` (code review gate before committing)
+- **Complements:** All `*-feature` and `*-refactor` skills as final quality gate
+- **REQUIRED:** Fix all CRITICAL and HIGH issues before code is committed
+- **REQUIRED:** Update CLAUDE.md if review reveals project-specific gotchas (`claude-md`)
