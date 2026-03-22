@@ -1,82 +1,113 @@
 # Claude Code Skills for Full-Stack Engineering
 
-A collection of 21 Claude Code skills covering the full software engineering cycle. Built for engineers who care about performance, clean architecture, and shipping quality code fast.
+33 Claude Code skills that cover the entire engineering and product lifecycle. From product spec to production deploy, from scaffolding to incident response.
+
+Built for engineers who care about performance, clean architecture, and shipping quality code fast.
 
 ## What This Is
 
 Claude Code [skills](https://docs.anthropic.com/en/docs/claude-code/skills) are reusable instruction sets that teach Claude how to approach specific engineering tasks. Instead of repeating "don't write N+1 queries" or "use testcontainers for integration tests" every session, skills encode your standards permanently.
 
-This suite covers two backend stacks plus React, from project scaffolding to production deployment:
+This suite covers:
 
-- **Go** — Fiber + pgxpool + golang-migrate
-- **Python** — FastAPI + SQLAlchemy 2.0 async + Alembic + uv
-- **React** — Vite + Bun + Vitest + testing-library
-- **Shared** — Clean architecture, TDD-first, Docker, GitHub Actions
+- **Go** — Fiber + pgxpool + golang-migrate + swaggo
+- **Python** — FastAPI + SQLAlchemy 2.0 async + Alembic + uv + mypy strict
+- **React** — Vite + Bun + Vitest + testing-library + MSW
+- **Shared** — Clean architecture, TDD-first, Docker, GitHub Actions, observability, security
 
 ## Skills Overview
+
+### Product & Planning
+
+| Skill | Description |
+|-------|-------------|
+| `product-spec` | PRDs, user stories, acceptance criteria, success metrics — from idea to actionable spec |
+| `system-design` | Architecture design: service boundaries, data flow, API contracts, trade-off decisions |
+| `data-model` | Database schema design: entities, relationships, indexes, access patterns, soft delete strategy |
+| `adr` | Architecture Decision Records — document why you chose one approach over another |
 
 ### Scaffolding
 
 | Skill | Description |
 |-------|-------------|
-| `go-scaffold` | Bootstrap a Go/Fiber backend with clean architecture, pgxpool, golang-migrate, swaggo, Docker Compose, hot reload |
-| `py-scaffold` | Bootstrap a FastAPI backend with SQLAlchemy 2.0 async, Alembic, uv, mypy strict, ruff |
-| `react-scaffold` | Bootstrap a React/Vite/Bun frontend with feature-based structure, typed API client, MSW |
+| `go-scaffold` | Bootstrap Go/Fiber backend with clean architecture, pgxpool, golang-migrate, swaggo, Docker Compose |
+| `py-scaffold` | Bootstrap FastAPI backend with SQLAlchemy 2.0 async, Alembic, uv, mypy strict, ruff |
+| `react-scaffold` | Bootstrap React/Vite/Bun frontend with feature-based structure, typed API client, MSW |
 
 ### Feature Development
 
 | Skill | Description |
 |-------|-------------|
-| `go-feature` | Layer-by-layer TDD: domain entity → repository interface → use case → Postgres repo → Fiber handler with swaggo annotations |
-| `py-feature` | Layer-by-layer TDD: domain entity → Protocol → use case → SQLAlchemy repo → FastAPI router, fully typed |
-| `react-feature` | Component TDD with testing-library, custom hook testing, MSW for API mocking, accessibility |
-| `api-design` | REST conventions for both stacks: response envelopes, generic validation, pagination, swaggo, error handling |
-| `db-migrate` | golang-migrate workflows, safe DDL patterns, zero-downtime migrations, idempotency checks |
-| `py-migrate` | Alembic + SQLAlchemy 2.0 workflows, async env.py, enum handling, data migrations |
+| `go-feature` | Layer-by-layer TDD: domain → use case → Postgres repo → Fiber handler with swaggo |
+| `py-feature` | Layer-by-layer TDD: domain → Protocol → use case → SQLAlchemy repo → FastAPI router |
+| `react-feature` | Component TDD with testing-library, hook testing, MSW, accessibility |
+| `api-design` | REST conventions, response envelopes, generic validation, pagination, swaggo annotations |
+| `api-contract` | Contract-first development: OpenAPI specs, shared types, contract testing, breaking change detection |
+| `db-migrate` | golang-migrate workflows, safe DDL, zero-downtime migrations |
+| `py-migrate` | Alembic + SQLAlchemy 2.0 workflows, async env.py, enum handling |
+| `event-driven` | Async processing, background jobs, Redis Pub/Sub, webhook handling, event design |
 
 ### Testing
 
 | Skill | Description |
 |-------|-------------|
-| `go-integration-test` | testcontainers-go for real Postgres/Redis, programmatic migrations, transaction rollback isolation |
-| `py-integration-test` | testcontainers-python with async SQLAlchemy sessions, factory fixtures, FastAPI TestClient overrides |
-
-### DevOps
-
-| Skill | Description |
-|-------|-------------|
-| `docker-build` | Multi-stage Dockerfiles for Go, Python (uv), React (Bun + nginx), full-stack Docker Compose |
-| `ci-pipeline` | GitHub Actions templates: lint, type-check, test (with Postgres service), build, coverage thresholds |
+| `go-integration-test` | testcontainers-go for real Postgres/Redis, transaction rollback isolation |
+| `py-integration-test` | testcontainers-python with async SQLAlchemy, factory fixtures |
 
 ### Code Quality, Review & Debugging
 
 | Skill | Description |
 |-------|-------------|
-| `code-quality` | Performance standards enforced across all code: N+1 prevention, batch operations, O(n) algorithms, pre-allocation, concurrent I/O |
-| `review-code` | 4-agent parallel code review: performance, architecture, quality, security — severity-ranked with auto-fix |
-| `debug` | Hands-on debugging toolkit: Docker inspection, API probing (curl), log analysis, database queries, Redis, browser/Playwright, pprof/py-spy |
+| `code-quality` | Performance standards: N+1 prevention, batch operations, O(n) algorithms, concurrent I/O |
+| `review-code` | 4-agent parallel review: performance, architecture, quality, security — severity-ranked with auto-fix |
+| `debug` | Hands-on toolkit: Docker inspect, curl, psql, redis-cli, pprof, py-spy, Playwright |
 
-### Maintenance
+### Security & Observability
 
 | Skill | Description |
 |-------|-------------|
-| `go-refactor` | Safe refactoring with characterization tests, architecture enforcement, pprof profiling, SQL optimization |
-| `py-refactor` | Refactoring with mypy compliance, py-spy profiling, SQLAlchemy N+1 detection, Protocol patterns |
+| `security` | Auth (JWT, RBAC), input validation, SQL injection prevention, rate limiting, security headers |
+| `observability` | Structured logging (slog/structlog), OpenTelemetry tracing, Prometheus metrics, Sentry |
+| `analytics` | Product analytics: event taxonomy, tracking implementation, funnels, A/B testing |
+
+### DevOps & Deployment
+
+| Skill | Description |
+|-------|-------------|
+| `docker-build` | Multi-stage Dockerfiles for Go, Python (uv), React (Bun + nginx), Docker Compose |
+| `ci-pipeline` | GitHub Actions: lint, type-check, test with Postgres service, build, coverage |
+| `deploy` | Docker/Kubernetes deployment, environment promotion, migration strategy, rollback procedures |
+
+### Operations & Maintenance
+
+| Skill | Description |
+|-------|-------------|
+| `incident-response` | Severity classification, triage, mitigation, root cause analysis, postmortem template |
+| `go-refactor` | Safe refactoring with characterization tests, pprof profiling, SQL optimization |
+| `py-refactor` | Refactoring with mypy compliance, py-spy profiling, SQLAlchemy N+1 detection |
 | `react-refactor` | Component decomposition, bundle analysis, React Profiler, state management cleanup |
-| `dep-update` | Safe dependency updates for Go, Python (uv), Bun with security audits and type-check verification |
-| `fullstack-healthcheck` | Auto-detect stack, run all checks (build, test, lint, types, migrations, Docker, security), produce health report |
+| `dep-update` | Safe dependency updates with security audits and type-check verification |
+| `fullstack-healthcheck` | Auto-detect stack, run all checks, produce health report with action items |
+| `onboarding` | Generate CLAUDE.md, ARCHITECTURE.md, CONTRIBUTING.md, CODEOWNERS from codebase |
 
 ## How Skills Connect
 
 ```
+Idea → Product:
+  product-spec → system-design → data-model → adr
+
 Project Start:
   go-scaffold / py-scaffold + react-scaffold
-    → docker-build → ci-pipeline → fullstack-healthcheck
+    → onboarding (generate docs)
+    → docker-build → ci-pipeline → deploy
+    → observability → security
 
 Feature Development:
-  api-design → db-migrate / py-migrate
+  api-contract → api-design → db-migrate / py-migrate
     → go-feature / py-feature  ←→  go-integration-test / py-integration-test
     → react-feature (parallel)
+    → event-driven (async work)
+    → analytics (instrumentation)
 
   All features enforce:
     → code-quality (performance standards)
@@ -88,6 +119,7 @@ Pre-commit:
 Something breaks:
   → debug (hands-on investigation)
     → superpowers:systematic-debugging (methodology)
+    → incident-response (if production)
 
 Maintenance:
   fullstack-healthcheck
@@ -118,6 +150,7 @@ Open Claude Code and check that skills appear:
 ```
 > /review-code
 > /go-scaffold
+> /product-spec
 > /fullstack-healthcheck
 ```
 
@@ -135,10 +168,10 @@ git pull
 
 Each skill is a standalone Markdown file in `.claude/skills/<name>/SKILL.md`. Fork and modify:
 
-- **Different framework?** Edit `go-scaffold` to use Echo/Gin instead of Fiber, or `py-scaffold` for Django
-- **Different DB?** Edit `db-migrate` for your migration tool, update query patterns in `code-quality`
+- **Different framework?** Edit `go-scaffold` to use Echo/Gin, or `py-scaffold` for Django
+- **Different DB?** Edit `db-migrate` for your migration tool, update `code-quality` patterns
 - **Different CI?** Edit `ci-pipeline` for your CI provider
-- **Different conventions?** Edit `api-design` for your response envelope and validation patterns
+- **Different conventions?** Edit `api-design` for your response envelope and validation
 
 ### Adding New Skills
 
@@ -159,66 +192,34 @@ EOF
 ln -sf "$(pwd)/.claude/skills/my-skill" "$HOME/.claude/skills/my-skill"
 ```
 
-### Key Patterns Used
+### Key Patterns
 
-**Generic validation (Go)** — Instead of manual `BodyParser` + validation per handler, we use generic functions:
+**Generic validation (Go):**
 ```go
 body, err := pkg.ValidateBody[CreateUserRequest](c)   // JSON body
 query, err := pkg.ValidateQuery[ListUsersQuery](c)     // Query params
 params, err := pkg.ValidateParams[GetUserParams](c)    // Path params
 ```
-Uses `go-playground/validator/v10` with struct tags. See `api-design` skill for full details.
 
-**Response envelope** — Standardized across all endpoints:
+**Response envelope:**
 ```json
-// Success list
 { "items": [...], "pagination": { "limit": 20, "offset": 0, "total": 100 } }
-
-// Error
-{ "code": "validation_error", "message": "...", "details": [{ "field": "email", "message": "..." }] }
+{ "code": "validation_error", "message": "...", "details": [{ "field": "...", "message": "..." }] }
 ```
 
-**Clean architecture** — Dependencies point inward. Domain imports nothing external:
+**Clean architecture:**
 ```
 interfaces → application → domain ← infrastructure
 ```
 
 ## Works Best With
 
-These skills are designed to complement the [superpowers](https://github.com/anthropics/claude-code-plugins) plugin collection:
+Designed to complement the [superpowers](https://github.com/anthropics/claude-code-plugins) plugin:
 
 - `superpowers:test-driven-development` — TDD workflow (chained by all feature skills)
-- `superpowers:systematic-debugging` — Root cause analysis (chained by refactor skills)
-- `superpowers:finishing-a-development-branch` — Branch completion workflow (chained by dep-update)
+- `superpowers:systematic-debugging` — Root cause analysis (chained by debug/refactor skills)
 - `superpowers:brainstorming` — Pre-implementation design exploration
-
-## Project Structure
-
-```
-.claude/
-  skills/
-    go-scaffold/SKILL.md
-    py-scaffold/SKILL.md
-    react-scaffold/SKILL.md
-    go-feature/SKILL.md
-    py-feature/SKILL.md
-    react-feature/SKILL.md
-    api-design/SKILL.md
-    db-migrate/SKILL.md
-    py-migrate/SKILL.md
-    go-integration-test/SKILL.md
-    py-integration-test/SKILL.md
-    docker-build/SKILL.md
-    ci-pipeline/SKILL.md
-    code-quality/SKILL.md
-    review-code/SKILL.md
-    debug/SKILL.md
-    go-refactor/SKILL.md
-    py-refactor/SKILL.md
-    react-refactor/SKILL.md
-    dep-update/SKILL.md
-    fullstack-healthcheck/SKILL.md
-```
+- `superpowers:finishing-a-development-branch` — Branch completion workflow
 
 ## License
 
