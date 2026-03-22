@@ -7,6 +7,8 @@ description: Use when reviewing changed code before committing or after completi
 
 Review all changed files for performance, architecture violations, type safety, and code quality. Fix every real issue found. Severity-ranked — critical issues first.
 
+**Verification rule:** Every fix must be verified. Run tests after fixing. Never say "this should fix it" — show the test output proving it does.
+
 ## Phase 1: Identify Changes & Detect Stack
 
 Run `git diff` (or `git diff HEAD` if there are staged changes) to see what changed. If no git changes, review files edited in this conversation.

@@ -192,6 +192,46 @@ These are applied automatically — never ask the user about them:
 3. **Security** — parameterized queries, input validation, auth on every route, no hardcoded secrets (`security`)
 4. **TDD** — failing test before implementation, always (`superpowers:test-driven-development`)
 
+## Verification Language Discipline
+
+**Never use vague success language.** Every claim must be backed by actual output.
+
+| Forbidden | Required |
+|-----------|----------|
+| "This should work" | "Tests pass: 42/42 PASS" (show output) |
+| "I think this fixes it" | "Reproduced bug, applied fix, verified: [actual output]" |
+| "Probably fine" | "Ran `make lint` — 0 errors, 0 warnings" |
+| "Seems correct" | "Verified with `curl -X POST ...` — 200 OK, response: {...}" |
+| "Tests should pass" | "Ran `go test ./...` — PASS (output attached)" |
+
+**Rule:** If you haven't run it and seen the output, you don't know if it works. Never claim success without evidence.
+
+## Escalation: 3-Strikes Rule
+
+If the same fix fails 3 times, **stop fixing and question the architecture:**
+
+1. First attempt fails → adjust approach, try again
+2. Second attempt fails → reconsider assumptions, try a different angle
+3. Third attempt fails → **STOP.** The problem is likely architectural, not tactical.
+
+At 3 strikes:
+- Report the 3 failed attempts with evidence
+- Ask the user: "I've tried 3 approaches and all failed. This suggests the issue is structural, not a simple fix. Should I investigate the architecture?"
+- Route to `go-refactor`/`py-refactor`/`react-refactor` or `system-design` for deeper analysis
+
+**Never thrash on the same problem.** 3 strikes means step back.
+
+## Codebase Discovery
+
+When working on an unfamiliar codebase or feature area, **discover before diving:**
+
+1. Identify the 5-10 most relevant files before reading code
+2. Read entry points and interfaces first, implementations second
+3. Check CLAUDE.md for documented conventions and gotchas
+4. Check existing tests to understand expected behavior
+
+**Don't read the entire repo.** Find the critical files, understand the patterns, then work.
+
 ## Anti-Patterns
 
 | Bad | Good |
@@ -202,6 +242,8 @@ These are applied automatically — never ask the user about them:
 | Ask everything upfront | Ask in rounds: 1-3 questions → work → 1-2 more if needed |
 | Assume the user wants the most complex solution | Default to the simplest approach, offer to expand |
 | Pick skills without telling the user | State which skills you'll use and why |
+| Say "this should work" without running it | Run the command and show the output |
+| Try the same fix 4+ times | Stop at 3 strikes, escalate to architecture review |
 
 ## Red Flags
 
@@ -216,3 +258,5 @@ If you catch yourself doing any of these, STOP:
 - Making the same mistake that's already documented in CLAUDE.md's Gotchas
 - Writing code without security considerations (auth, validation, parameterized queries)
 - Not updating CLAUDE.md after the user corrects you
+- Saying "should work" or "probably fixed" without showing verification output
+- Trying the same approach more than 3 times without escalating

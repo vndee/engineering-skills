@@ -11,6 +11,8 @@ Safe refactoring patterns, type safety enforcement, and performance optimization
 
 **Core principle:** Never refactor without characterization tests. Never optimize without profiling. Always improve type coverage.
 
+**3-strikes rule:** If the same refactoring approach fails 3 times, stop. The problem is architectural — escalate to `system-design` for a deeper review instead of thrashing.
+
 ## Safe Refactoring Process
 
 1. **Write characterization tests** — capture current behavior

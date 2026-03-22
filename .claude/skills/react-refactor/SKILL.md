@@ -11,6 +11,8 @@ Safe component refactoring, performance optimization, and bundle size reduction 
 
 **Core principle:** Write characterization tests before refactoring. Profile before optimizing.
 
+**3-strikes rule:** If the same refactoring approach fails 3 times, stop. The problem is architectural — escalate to `system-design` for a deeper review instead of thrashing.
+
 ## Safe Refactoring Process
 
 1. **Write characterization tests** — capture current rendering and behavior
