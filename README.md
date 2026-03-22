@@ -28,7 +28,7 @@ These are enforced by skills at every stage — not optional, not "nice to have"
 
 2. **Clean architecture** — Domain isolation, dependency rules, layers that don't leak. Code structured so it can evolve without rewriting. No spaghetti, no "we'll refactor later."
 
-3. **Security by default** — Parameterized queries always. Input validation at every boundary. Auth middleware on every protected route. No hardcoded secrets, no SQL injection, no XSS. Security is not a feature to add later — it's baked into every skill from scaffold to deploy.
+3. **Secure by design** — Parameterized queries always. Input validation at every boundary. Auth middleware on every protected route. No hardcoded secrets, no SQL injection, no XSS. Security is not a feature to add later — it's baked into every skill from scaffold to deploy.
 
 4. **Test-driven always** — No production code without a failing test first. TDD is the process, not a suggestion. Tests prove the code works; code without tests is a liability.
 
