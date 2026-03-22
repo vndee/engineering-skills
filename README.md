@@ -4,11 +4,60 @@
 
 Built for engineers who care about performance, clean architecture, and shipping quality code fast.
 
+## Philosophy
+
+### The Problem
+
+AI coding tools produce code that works but doesn't scale. They write N+1 queries, dump everything in one file, forget your conventions every session, and guess what you want instead of asking. The output looks like a junior developer's first week — functional but naive.
+
+### The Solution: An Assembly Line for Software
+
+This project treats software development as an **assembly line**. A raw idea enters one end; production-grade, tested, documented software exits the other. Each stage adds value, enforces standards, and catches mistakes before they propagate.
+
+```
+Idea → Spec → Architecture → Schema → Code → Test → Review → Deploy → Monitor → Maintain
+```
+
+Every stage has a dedicated skill. Every skill encodes the knowledge of a senior engineer. The result: one person with Claude Code operates at the output of a full engineering team.
+
+### Three Non-Negotiables
+
+These are enforced by skills at every stage — not optional, not "nice to have":
+
+1. **Performance first** — Every line written with scalability in mind. O(n) algorithms, batch database operations, pre-allocated collections, concurrent I/O. If there's an N+1 query in the code, the pipeline failed.
+
+2. **Clean architecture** — Domain isolation, dependency rules, layers that don't leak. Code structured so it can evolve without rewriting. No spaghetti, no "we'll refactor later."
+
+3. **Test-driven always** — No production code without a failing test first. TDD is the process, not a suggestion. Tests prove the code works; code without tests is a liability.
+
+### Human + Agent = Pair Partners
+
+The human brings **product vision, context, and decisions**. The agent brings **engineering expertise, discipline, and execution**. Neither works well alone.
+
+The agent **always checks in** — at phase transitions, at design decisions, when something unexpected surfaces. It uses interactive questions (selectable options, not walls of text) so the human stays in the loop without doing busywork.
+
+The agent **never asks about engineering best practices** — parameterized queries, indexes, error handling, test structure — those are encoded in skills and applied automatically. It **does ask about product decisions** — scope, features, trade-offs, priorities — because those belong to the human.
+
+### Who This Is For
+
+- **Solo founders** who need a full engineering department in their CLI
+- **Senior engineers** who want their AI to match their standards, not produce junior-level code
+- **Small teams** who want consistent engineering quality across all members' AI usage
+- **Anyone** tired of re-explaining their stack, patterns, and conventions every session
+
+### What This Replaces
+
+| Without skills | With skills |
+|---------------|------------|
+| Re-explain conventions every session | Encoded permanently, applied automatically |
+| N+1 queries, no indexes, O(n²) loops | Performance standards enforced at every layer |
+| Everything in one file, no architecture | Clean architecture from line one |
+| Agent guesses what you want | Agent asks targeted questions with selectable options |
+| Junior-level output that needs rewriting | Senior-level output that ships |
+
 ## What This Is
 
-Claude Code [skills](https://docs.anthropic.com/en/docs/claude-code/skills) are reusable instruction sets that teach Claude how to approach specific engineering tasks. Instead of repeating "don't write N+1 queries" or "use testcontainers for integration tests" every session, skills encode your standards permanently.
-
-This suite covers:
+[Claude Code skills](https://docs.anthropic.com/en/docs/claude-code/skills) are reusable instruction sets that teach Claude how to approach engineering tasks. This suite covers:
 
 - **Go** — Fiber + pgxpool + golang-migrate + swaggo
 - **Python** — FastAPI + SQLAlchemy 2.0 async + Alembic + uv + mypy strict
